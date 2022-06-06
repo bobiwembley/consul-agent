@@ -1,0 +1,41 @@
+---
+ # tasks file for consul-agent
+ #
+ 
+ - name: add package daemon on servers
+   apt:
+    name:  "{{ item }}"
+    state: present
+   with_items:
+      - software-properties-common     
+      - gnupg
+      - lsb-release
+ 
+ - name: add apt key ubuntu-debian/consul-agent
+   apt_key:
+     url: https://apt.releases.hashicorp.com/gpg
+     state: present
+ 
+ - name: "Ansible | Print 'lsb_release'"
+   debug:
+     msg: "{{ ansible_distribution_release }}"
+      
+ - name: add debian-ubuntu repo consul package 
+   apt_repository: 
+    repo:  "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    state: present
+
+ - name: Update apt and install consul-agent/ubuntu
+   apt:
+     name: "{{ item }}"
+     state: latest
+     update_cache: yes
+   with_items:
+       - consul
+ 
+         
+ - name: start consul service
+   service:
+       name: consul
+       state: started
+       enabled: yes
