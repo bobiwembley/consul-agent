@@ -1,0 +1,12 @@
+{
+    "server": false,
+    "datacenter": "datalo",
+    "data_dir": "/var/consul",
+    "encrypt": "{{ consul_token }}",  
+    "log_level": "INFO",
+    "enable_syslog": true,
+    "leave_on_terminate": true,
+    "start_join": [
+        "{{ consul_server }}"
+    ]
+}
