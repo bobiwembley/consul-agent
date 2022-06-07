@@ -19,8 +19,8 @@ Role Variables
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
+    ansible-playbook -i  inventory/hosts  -u user   consul-agent.yml    -e " consul_token="add_your_token" consul_server="ip_server" " --limit=server
+---
     - hosts: servers
       roles:
          - consul-agent

@@ -32,8 +32,22 @@
      update_cache: yes
    with_items:
        - consul
+
+ - name: add config client on consul-agent
+   template:
+     src: config.json.j2
+     dest: /etc/consul.d/config.json 
  
-         
+ - name: add systemd script start
+   template: 
+     src: consul-client.service.j2
+     dest: /etc/systemd/system/consul.service
+     mode: '0644'
+
+ - name: just force systemd to reread configs 
+   systemd:
+     daemon_reload: yes  
+
  - name: start consul service
    service:
        name: consul
